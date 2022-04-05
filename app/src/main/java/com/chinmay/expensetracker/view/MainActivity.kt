@@ -1,7 +1,8 @@
-package com.chinmay.expensetracker
+package com.chinmay.expensetracker.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.chinmay.expensetracker.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
