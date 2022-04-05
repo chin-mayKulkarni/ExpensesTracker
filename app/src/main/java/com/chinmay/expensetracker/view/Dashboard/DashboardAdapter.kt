@@ -1,5 +1,6 @@
 package com.chinmay.expensetracker.view.Dashboard
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +8,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.chinmay.expensetracker.R
 import com.chinmay.expensetracker.model.Expense
+import com.chinmay.expensetracker.util.SharedPreferencesHelper
 import kotlinx.android.synthetic.main.item_expense_layout.view.*
 
 class DashboardAdapter(val expenseList: ArrayList<Expense>) :
@@ -26,15 +28,22 @@ class DashboardAdapter(val expenseList: ArrayList<Expense>) :
     }
 
     override fun onBindViewHolder(holder: ExpenseViewHolder, position: Int) {
+        val prefHelper = SharedPreferencesHelper(holder.view.context)
+        val loggedInUser = prefHelper.getLoggedInUser()
         holder.view.expenseTitle.text = expenseList[position].title
-        holder.view.paidBy.text = expenseList[position].paidBy
+        if (loggedInUser.equals(expenseList[position].paidBy)) {
+            holder.view.paidBy.text = "Me"
+        } else {
+            holder.view.paidBy.text = expenseList[position].paidBy
+        }
         holder.view.expenseAmount.text = expenseList[position].expenseAmount
         holder.view.expenseDate.text = expenseList[position].expenseDate
 
 
         holder.view.setOnClickListener {
+            Log.d("DashboardAdapter", expenseList[position].utid.toString())
             val action =
-                DashboardFragmentDirections.actionDetailsFragment()
+                DashboardFragmentDirections.actionDetailsFragment(expenseList[position].utid)
             Navigation.findNavController(it)
                 .navigate(action)
         }

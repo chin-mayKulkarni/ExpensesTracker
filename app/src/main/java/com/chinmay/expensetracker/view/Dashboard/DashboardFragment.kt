@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chinmay.expensetracker.R
-import com.chinmay.expensetracker.view.login.LoginFragmentDirections
+import com.chinmay.expensetracker.util.SharedPreferencesHelper
 import com.chinmay.expensetracker.viewmodel.DashboardViewModel
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 
@@ -18,6 +18,7 @@ class DashboardFragment : Fragment() {
 
     private lateinit var viewModel : DashboardViewModel
     private val dashboardAdapter = DashboardAdapter(arrayListOf())
+    private lateinit var prefHelper: SharedPreferencesHelper
 
 
 
@@ -32,6 +33,7 @@ class DashboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
+        prefHelper = SharedPreferencesHelper(requireContext())
 
         transaction_list.apply {
             layoutManager = LinearLayoutManager(context)

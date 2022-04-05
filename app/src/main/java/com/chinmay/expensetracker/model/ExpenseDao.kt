@@ -14,7 +14,7 @@ interface ExpenseDao {
     suspend fun getAllExpenses(): List<Expense>
 
     @Query("SELECT * FROM expense WHERE utid = :dogId")
-    suspend fun getExpense(dogId: Int): Expense
+    suspend fun getExpenseDetails(dogId: Int): Expense
 
     @Query("DELETE FROM expense")
     suspend fun deleteAllExpenses()
