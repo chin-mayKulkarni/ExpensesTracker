@@ -37,8 +37,11 @@ class DashboardFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = dashboardAdapter
         }
+
+        viewModel.fetchFromDatabase()
+
         btn_add_transaction.setOnClickListener {
-            val action = DashboardFragmentDirections.actionDashboardFragmentToDetailsFragment()
+            val action = DashboardFragmentDirections.actionAddExpenseFragment()
             Navigation.findNavController(it).navigate(action)
         }
 

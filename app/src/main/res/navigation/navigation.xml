@@ -21,10 +21,22 @@
         <action
             android:id="@+id/actionAddExpenseFragment"
             app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/actionDetailsFragment"
+            app:destination="@id/detailsFragment2" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.chinmay.expensetracker.view.AddExpense.AddExpenseFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_add_expense" />
+    <fragment
+        android:id="@+id/detailsFragment2"
+        android:name="com.chinmay.expensetracker.view.Details.DetailsFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details" >
+        <action
+            android:id="@+id/action_detailsFragment2_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+    </fragment>
 </navigation>

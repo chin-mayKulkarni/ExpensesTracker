@@ -17,5 +17,5 @@ interface ExpenseDao {
     suspend fun getExpense(dogId: Int): Expense
 
     @Query("DELETE FROM expense")
-    suspend fun deleteAllSongs()
+    suspend fun deleteAllExpenses()
 }

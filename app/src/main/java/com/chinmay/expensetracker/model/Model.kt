@@ -7,20 +7,21 @@ import androidx.room.PrimaryKey
 @Entity
 data class Expense(
     @ColumnInfo(name = "title")
-    val Title : String,
+    val title: String,
 
     @ColumnInfo(name = "amount")
-    val Amount : Int,
+    val expenseAmount: String,
 
     @ColumnInfo(name = "paid_by")
-    val PaidBy : String,
+    val paidBy: String,
 
     @ColumnInfo(name = "date")
-    val Date : String,
+    val expenseDate: String,
 
     @ColumnInfo(name = "description")
-    val Description : String?
+    val description: String?
 ){
     @PrimaryKey(autoGenerate = true)
     var utid: Int = 0
 }
+
