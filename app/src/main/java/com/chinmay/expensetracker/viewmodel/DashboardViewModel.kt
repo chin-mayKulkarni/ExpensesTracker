@@ -7,17 +7,17 @@ import com.chinmay.expensetracker.model.Expense
 import com.chinmay.expensetracker.model.ExpenseDataBase
 import kotlinx.coroutines.launch
 
-class DashboardViewModel(application: Application) : AndroidViewModel(application) {
+class DashboardViewModel(application: Application) : BaseViewModel(application) {
     val expense = MutableLiveData<List<Expense>>()
     val loading = MutableLiveData<Boolean>()
 
-    private fun fetchFromDatabase() {
+    public fun fetchFromDatabase() {
         loading.value = true
-        /*launch {
+        launch {
             val expenses = ExpenseDataBase(getApplication()).expenseDao().getAllExpenses()
             expensesRetrieved(expenses)
             //Toast.makeText(getApplication(), "Retrieved from DB", Toast.LENGTH_LONG).show()
-        }*/
+        }
     }
 
     private fun expensesRetrieved(expenseList: List<Expense>){

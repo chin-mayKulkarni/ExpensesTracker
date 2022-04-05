@@ -26,14 +26,15 @@ class DashboardAdapter(val expenseList: ArrayList<Expense>) :
     }
 
     override fun onBindViewHolder(holder: ExpenseViewHolder, position: Int) {
-        holder.view.expenseTitle.text = expenseList[position].Title
-        holder.view.paidBy.text = expenseList[position].PaidBy
-        holder.view.expenseAmount.text = expenseList[position].Amount.toString()
-        holder.view.expenseDate.text = expenseList[position].Date
+        holder.view.expenseTitle.text = expenseList[position].title
+        holder.view.paidBy.text = expenseList[position].paidBy
+        holder.view.expenseAmount.text = expenseList[position].expenseAmount
+        holder.view.expenseDate.text = expenseList[position].expenseDate
+
 
         holder.view.setOnClickListener {
             val action =
-                DashboardFragmentDirections.actionAddExpenseFragment()
+                DashboardFragmentDirections.actionDetailsFragment()
             Navigation.findNavController(it)
                 .navigate(action)
         }
@@ -42,7 +43,7 @@ class DashboardAdapter(val expenseList: ArrayList<Expense>) :
 
 
     override fun getItemCount(): Int {
-        return 0
+        return expenseList.size
     }
 
     class ExpenseViewHolder(var view: View) : RecyclerView.ViewHolder(view)
