@@ -19,12 +19,12 @@
         android:label="fragment_dashboard"
         tools:layout="@layout/fragment_dashboard" >
         <action
-            android:id="@+id/action_dashboardFragment_to_detailsFragment"
+            android:id="@+id/actionAddExpenseFragment"
             app:destination="@id/detailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.chinmay.expensetracker.view.Details.DetailsFragment"
+        android:name="com.chinmay.expensetracker.view.AddExpense.AddExpenseFragment"
         android:label="fragment_details"
-        tools:layout="@layout/fragment_details" />
+        tools:layout="@layout/fragment_add_expense" />
 </navigation>
