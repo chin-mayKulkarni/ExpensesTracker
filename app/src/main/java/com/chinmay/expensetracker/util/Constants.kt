@@ -4,9 +4,9 @@ object Constants {
 
 
     val usersList = listOf(
-        "User1",
-        "User2",
-        "User3",
-        "User4",
+        "user1",
+        "user2",
+        "user3",
+        "user4",
     )
 }

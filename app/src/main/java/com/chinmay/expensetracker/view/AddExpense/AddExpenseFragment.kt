@@ -9,17 +9,15 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProviders
 import com.chinmay.expensetracker.R
 import com.chinmay.expensetracker.model.Expense
-import com.chinmay.expensetracker.model.ExpenseDataBase
 import com.chinmay.expensetracker.util.Constants
 import com.chinmay.expensetracker.util.transformIntoDatePicker
-import com.chinmay.expensetracker.viewmodel.AddExpensesViewModel
+import com.chinmay.expensetracker.viewmodel.DashboardViewModel
 import kotlinx.android.synthetic.main.fragment_add_expense.*
-import kotlinx.coroutines.launch
 import java.util.*
 
 class AddExpenseFragment : Fragment() {
 
-    lateinit var viewModel : AddExpensesViewModel
+    lateinit var viewModel : DashboardViewModel
 
 
     override fun onCreateView(
@@ -33,7 +31,7 @@ class AddExpenseFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this).get(AddExpensesViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
 
         toolbar.title = "Add Expense"
         toolbar.setNavigationOnClickListener(View.OnClickListener {
@@ -66,6 +64,8 @@ class AddExpenseFragment : Fragment() {
             listOf(Expense(title, amount, date, description, paid_by))
 
             viewModel.storeDataLocally(listOf(Expense(title, amount, paid_by, date, description)))
+
+            activity?.onBackPressed()
 
 
         }
