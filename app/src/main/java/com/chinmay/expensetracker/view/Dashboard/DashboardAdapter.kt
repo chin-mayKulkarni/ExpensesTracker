@@ -32,7 +32,7 @@ class DashboardAdapter(val expenseList: ArrayList<Expense>) :
         val loggedInUser = prefHelper.getLoggedInUser()
         holder.view.expenseTitle.text = expenseList[position].title
         if (loggedInUser.equals(expenseList[position].paidBy)) {
-            holder.view.paidBy.text = "Me"
+            holder.view.paidBy.text = "You"
         } else {
             holder.view.paidBy.text = expenseList[position].paidBy
         }

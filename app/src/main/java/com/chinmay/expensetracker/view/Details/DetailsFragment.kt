@@ -1,7 +1,9 @@
 package com.chinmay.expensetracker.view.Details
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
@@ -9,6 +11,7 @@ import com.chinmay.expensetracker.R
 import com.chinmay.expensetracker.util.SharedPreferencesHelper
 import com.chinmay.expensetracker.view.MainActivity
 import com.chinmay.expensetracker.viewmodel.DashboardViewModel
+import kotlinx.android.synthetic.main.fragment_add_expense.*
 import kotlinx.android.synthetic.main.fragment_details.*
 import java.util.*
 
@@ -17,6 +20,7 @@ class DetailsFragment : Fragment() {
     val args : DetailsFragmentArgs by navArgs()
     lateinit var viewModel : DashboardViewModel
     lateinit var prefHelper : SharedPreferencesHelper
+    var allUsers = "user1 user2 user3 user4"
 
 
     override fun onCreateView(
@@ -35,7 +39,9 @@ class DetailsFragment : Fragment() {
         (activity as MainActivity?)?.setActionBarTitle("Details")
 
 
+
         viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
+        viewModel.fetchUserNameList()
         val utid = args.utid
         viewModel.fetchDetails(utid)
         observeViewModel()
@@ -52,15 +58,25 @@ class DetailsFragment : Fragment() {
                 expense_date.text = it.expenseDate
                 expense_desc.text = it.description
                 if (prefHelper.getLoggedInUser().equals(it.paidBy)){
-                    expense_paid_by.text = "Me"
+                    expense_paid_by.text = "You"
                 } else expense_paid_by.text = it.paidBy
                 expense_split_with.text = getUsers(it.paidBy)
             }
         })
+
+        viewModel.usersList.observe(viewLifecycleOwner, androidx.lifecycle.Observer { users->
+            users?.let {
+                Log.d("AddExpensesFragment", it.toString())
+               // et_paid_by.setAdapter(usersAdapter)
+                allUsers = it.toString().replace("[", "")
+                allUsers = allUsers.replace("]", "")
+                allUsers = allUsers.replace(",", "")
+            }
+
+        })
     }
 
     private fun getUsers(paidBy: String): CharSequence? {
-        var allUsers = "user1 user2 user3 user4"
         return  allUsers.replace(paidBy, "")
 
 

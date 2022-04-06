@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -52,6 +53,9 @@ class LoginFragment : Fragment() {
             val valid = viewModel.validateUser(username.text.toString(), password.text.toString())
             if (valid) {
                 Navigation.findNavController(it).navigate(action)
+            } else{
+                username.text?.clear()
+                password.text?.clear()
             }
         }
         observeViewModel()
@@ -68,6 +72,16 @@ class LoginFragment : Fragment() {
         })
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 
 }
