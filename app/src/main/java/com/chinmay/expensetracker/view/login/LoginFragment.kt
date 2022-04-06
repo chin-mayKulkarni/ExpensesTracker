@@ -8,13 +8,17 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.chinmay.expensetracker.R
+import com.chinmay.expensetracker.model.User
+import com.chinmay.expensetracker.view.MainActivity
 import com.chinmay.expensetracker.viewmodel.DashboardViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : Fragment() {
 
     private lateinit var viewModel : DashboardViewModel
+    lateinit var usersList: List<User>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,13 +31,26 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        usersList = listOf(
+            User("user1", "pass1"),
+            User("user2", "pass2"),
+            User("user3", "pass3"),
+            User("user4", "pass4")
+        )
+
         viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
+        val action = LoginFragmentDirections.actionDashboardFragment()
+        viewModel.initializeUsers(usersList)
+        viewModel.fetchUser()
+
+       if ( viewModel.isLoggedIn()){
+           Navigation.findNavController(view).navigate(action)
+       }
+        (activity as MainActivity?)?.setActionBarTitle("Login")
 
         btn_login.setOnClickListener {
-
             val valid = viewModel.validateUser(username.text.toString(), password.text.toString())
             if (valid) {
-                val action = LoginFragmentDirections.actionDashboardFragment()
                 Navigation.findNavController(it).navigate(action)
             }
         }

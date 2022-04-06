@@ -1,14 +1,13 @@
 package com.chinmay.expensetracker.view.Details
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.chinmay.expensetracker.R
 import com.chinmay.expensetracker.util.SharedPreferencesHelper
+import com.chinmay.expensetracker.view.MainActivity
 import com.chinmay.expensetracker.viewmodel.DashboardViewModel
 import kotlinx.android.synthetic.main.fragment_details.*
 import java.util.*
@@ -32,6 +31,10 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         prefHelper = SharedPreferencesHelper(requireContext())
 
+        setHasOptionsMenu(true)
+        (activity as MainActivity?)?.setActionBarTitle("Details")
+
+
         viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
         val utid = args.utid
         viewModel.fetchDetails(utid)
@@ -39,12 +42,13 @@ class DetailsFragment : Fragment() {
 
     }
 
+
     private fun observeViewModel() {
         viewModel.expenseDetails.observe(viewLifecycleOwner, androidx.lifecycle.Observer { expense ->
             expense?.let {
 
                 title.text = it.title
-                amount.text = it.expenseAmount
+                amount.text = "₹" + it.expenseAmount.toString()
                 expense_date.text = it.expenseDate
                 expense_desc.text = it.description
                 if (prefHelper.getLoggedInUser().equals(it.paidBy)){

@@ -1,0 +1,28 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_logout"
+        android:icon="@drawable/ic_log_out"
+        app:showAsAction="ifRoom"
+        android:title="Logout" />
+
+    <item
+        android:id="@+id/action_sort"
+        android:icon="@drawable/ic_sort"
+        app:showAsAction="ifRoom"
+        android:title="Sort">
+
+        <menu>
+            <item
+                android:id="@+id/action_sort_date"
+                android:title="Sort by date" />
+
+            <item
+                android:id="@+id/action_sort_amount"
+                android:title="Sort by Amount" />
+        </menu>
+    </item>
+
+
+</menu>
