@@ -1,6 +1,9 @@
 package com.chinmay.expensetracker.view.AddExpense
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.chinmay.expensetracker.R
 import com.chinmay.expensetracker.model.Expense
-import com.chinmay.expensetracker.util.Constants
 import com.chinmay.expensetracker.util.transformIntoDatePicker
 import com.chinmay.expensetracker.view.MainActivity
 import com.chinmay.expensetracker.viewmodel.DashboardViewModel
@@ -19,6 +21,22 @@ import java.util.*
 class AddExpenseFragment : Fragment() {
 
     lateinit var viewModel : DashboardViewModel
+
+    private val mTextWatcher: TextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(charSequence: CharSequence, i: Int, i2: Int, i3: Int) {}
+        override fun onTextChanged(charSequence: CharSequence, i: Int, i2: Int, i3: Int) {}
+        override fun afterTextChanged(editable: Editable) {
+            // check Fields For Empty Values
+            checkFieldsForEmptyValues()
+        }
+    }
+
+    private fun checkFieldsForEmptyValues() {
+        btn_save_expense.isEnabled = !(et_title.text.toString() == "" ||
+                et_amount.text.toString() == "" ||
+                et_date.text.toString() == "" ||
+                et_paid_by.text.toString() == "")
+    }
 
 
     override fun onCreateView(
@@ -35,19 +53,20 @@ class AddExpenseFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
         (activity as MainActivity?)?.setActionBarTitle("Add Expense")
 
-        val usersAdapter = ArrayAdapter(
-            requireContext(),
-            R.layout.item_autocomplete_layout,
-            Constants.usersList
-        )
+       viewModel.fetchUserNameList()
+
+        et_title.addTextChangedListener(mTextWatcher)
+        et_amount.addTextChangedListener(mTextWatcher)
+        et_date.addTextChangedListener(mTextWatcher)
+        et_desc.addTextChangedListener(mTextWatcher)
+        et_paid_by.addTextChangedListener(mTextWatcher)
+
 
         et_date.transformIntoDatePicker(
             requireContext(),
             "dd/MM/yyyy",
             Date()
         )
-
-        et_paid_by.setAdapter(usersAdapter)
 
 
         btn_save_expense.setOnClickListener {
@@ -57,14 +76,29 @@ class AddExpenseFragment : Fragment() {
             val description = et_desc.text.toString()
             val paid_by = et_paid_by.text.toString()
 
-            //listOf(Expense(title, amount, date, description, paid_by))
-
             viewModel.storeDataLocally(listOf(Expense(title, amount, paid_by, date, description)))
 
             activity?.onBackPressed()
 
 
         }
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        viewModel.usersList.observe(viewLifecycleOwner, androidx.lifecycle.Observer { users->
+            users?.let {
+                val usersAdapter = ArrayAdapter(
+                    requireContext(),
+                    R.layout.item_autocomplete_layout,
+                    it
+                )
+                Log.d("AddExpensesFragment", it.toString())
+                et_paid_by.setAdapter(usersAdapter)
+
+            }
+
+        })
     }
 
 

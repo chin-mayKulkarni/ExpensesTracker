@@ -14,14 +14,8 @@ class DashboardViewModel(application: Application) : BaseViewModel(application) 
     val expense = MutableLiveData<List<Expense>>()
     val expenseDetails = MutableLiveData<Expense>()
     val loading = MutableLiveData<Boolean>()
-    private var credMap: Map<String, String> = hashMapOf(
-        "user1" to "pass1",
-        "user2" to "pass2",
-        "user3" to "pass3",
-        "user4" to "pass4",
-        "q" to "q"
-    )
-    private lateinit var userMap : Map<String, String>
+    var usersList =  MutableLiveData<List<String>>()
+    private lateinit var userMap: Map<String, String>
 
     private var prefHelper = SharedPreferencesHelper(getApplication())
     val validUser = MutableLiveData<Boolean>()
@@ -64,15 +58,20 @@ class DashboardViewModel(application: Application) : BaseViewModel(application) 
     fun fetchUser() {
         launch {
             val userDetails = UsersDataBase(getApplication()).usersDao().getAllUser()
-             convertListToMap(userDetails)
+           userMap= convertListToMap(userDetails)
+            createUsersList(userMap)
             if (!userDetails.equals(null))
                 Log.d("DashBoardViewModel", userDetails.toString())
-            // expenseDetails.value = user
         }
     }
 
-    private fun convertListToMap(userDetails: List<User>) {
-        userMap = userDetails.map { it.userName to it.password }.toMap()
+    private fun createUsersList(userMap: Map<String, String>) {
+        usersList.value = userMap.keys.toList()
+
+    }
+
+    private fun convertListToMap(userDetails: List<User>): Map<String, String> {
+        return userDetails.map { it.userName to it.password }.toMap()
     }
 
     fun initializeUsers(usersList: List<User>) {
@@ -119,6 +118,17 @@ class DashboardViewModel(application: Application) : BaseViewModel(application) 
 
     fun isLoggedIn(): Boolean {
         return prefHelper.getLoggedInUser() != null
+    }
+
+    fun fetchUserNameList() {
+        launch {
+            val userDetails = UsersDataBase(getApplication()).usersDao().getAllUser()
+            userMap= convertListToMap(userDetails)
+            createUsersList(userMap)
+            if (!userDetails.equals(null))
+                Log.d("DashBoardViewModel", userDetails.toString())
+        }
+        //return usersList
     }
 
 

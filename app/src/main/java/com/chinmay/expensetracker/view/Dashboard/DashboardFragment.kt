@@ -2,6 +2,7 @@ package com.chinmay.expensetracker.view.Dashboard
 
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -65,10 +66,7 @@ class DashboardFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.action_logout ->{
-
-                viewModel.logout()
-                val action = DashboardFragmentDirections.actionLogoutUser()
-                view?.let { Navigation.findNavController(it).navigate(action) }
+                showDialog("Notice", "Do you want to logout?")
             }
             R.id.action_sort_amount ->{
                 sortOrderInc = !sortOrderInc
@@ -81,6 +79,28 @@ class DashboardFragment : Fragment() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun showDialog(title: String, message: String){
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(title)
+        builder.setMessage(message)
+        builder.setIcon(R.drawable.ic_log_out)
+
+        //performing positive action
+        builder.setPositiveButton("Yes"){dialogInterface, which ->
+            viewModel.logout()
+            val action = DashboardFragmentDirections.actionLogoutUser()
+            view?.let { Navigation.findNavController(it).navigate(action) }
+        }
+
+        builder.setNegativeButton("No"){dialogInterface, which ->
+
+        }
+
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
     }
 
 
