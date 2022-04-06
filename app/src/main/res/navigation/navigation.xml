@@ -11,7 +11,9 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/actionDashboardFragment"
-            app:destination="@id/dashboardFragment" />
+            app:destination="@id/dashboardFragment"
+            app:enterAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/bounce_interpolator" />
     </fragment>
     <fragment
         android:id="@+id/dashboardFragment"
@@ -20,13 +22,23 @@
         tools:layout="@layout/fragment_dashboard" >
         <action
             android:id="@+id/actionAddExpenseFragment"
-            app:destination="@id/detailsFragment" />
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@android:anim/slide_out_right"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/actionDetailsFragment"
-            app:destination="@id/detailsFragment2" />
+            app:destination="@id/detailsFragment2"
+            app:enterAnim="@android:anim/slide_out_right"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_logout_user"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
@@ -40,7 +52,8 @@
         tools:layout="@layout/fragment_details" >
         <action
             android:id="@+id/action_detailsFragment2_to_dashboardFragment"
-            app:destination="@id/dashboardFragment" />
+            app:destination="@id/dashboardFragment"
+            app:enterAnim="@android:anim/accelerate_interpolator" />
         <argument
             android:name="utid"
             app:argType="integer"

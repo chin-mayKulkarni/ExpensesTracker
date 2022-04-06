@@ -39,9 +39,6 @@ android {
 
 def lifeCycleExtensionVersion = '1.1.1'
 def supportVersion = '28.0.0'
-def retrofitVersion = '2.6.0'
-def glideVersion = '4.9.0'
-def rxJavaVersion = '2.1.1'
 def roomVersion = '2.4.0'
 def navVersion = '2.3.4'
 def preferencesVersion = '1.0.0'

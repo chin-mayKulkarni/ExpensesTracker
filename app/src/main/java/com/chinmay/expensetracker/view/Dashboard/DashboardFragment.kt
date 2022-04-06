@@ -2,6 +2,7 @@ package com.chinmay.expensetracker.view.Dashboard
 
 import android.os.Bundle
 import android.view.*
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -24,6 +25,15 @@ class DashboardFragment : Fragment() {
     var sortOrderInc = true
     var sortOrderDate = true
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                showDialog("Notice", "Do you want to logout?")
+            }
+        })
+    }
 
 
     override fun onCreateView(
@@ -109,6 +119,8 @@ class DashboardFragment : Fragment() {
             expenses?.let {
                 /*songsListLocal = songs
                 search_bar.isEnabled = true*/
+
+                if (it.size!=0) tv_no_records.visibility = View.GONE
                 transaction_list.visibility = View.VISIBLE
                 dashboardAdapter.updateExpensesList(expenses)
             }
