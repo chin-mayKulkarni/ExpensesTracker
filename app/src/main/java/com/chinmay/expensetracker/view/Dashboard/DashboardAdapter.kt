@@ -36,7 +36,7 @@ class DashboardAdapter(val expenseList: ArrayList<Expense>) :
         } else {
             holder.view.paidBy.text = expenseList[position].paidBy
         }
-        holder.view.expenseAmount.text = expenseList[position].expenseAmount
+        holder.view.expenseAmount.text = expenseList[position].expenseAmount.toString()
         holder.view.expenseDate.text = expenseList[position].expenseDate
 
 

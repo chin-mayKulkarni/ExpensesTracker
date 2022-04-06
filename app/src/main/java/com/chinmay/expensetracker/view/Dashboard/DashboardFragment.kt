@@ -1,24 +1,27 @@
 package com.chinmay.expensetracker.view.Dashboard
 
 import android.os.Bundle
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chinmay.expensetracker.R
 import com.chinmay.expensetracker.util.SharedPreferencesHelper
+import com.chinmay.expensetracker.view.MainActivity
 import com.chinmay.expensetracker.viewmodel.DashboardViewModel
 import kotlinx.android.synthetic.main.fragment_dashboard.*
+
 
 class DashboardFragment : Fragment() {
 
     private lateinit var viewModel : DashboardViewModel
     private val dashboardAdapter = DashboardAdapter(arrayListOf())
     private lateinit var prefHelper: SharedPreferencesHelper
+    var sortOrderInc = true
+    var sortOrderDate = true
 
 
 
@@ -40,6 +43,10 @@ class DashboardFragment : Fragment() {
             adapter = dashboardAdapter
         }
 
+        setHasOptionsMenu(true)
+        //MainActivity.setActionBarTitle("Dashboard")
+        (activity as MainActivity?)?.setActionBarTitle("Dashboard")
+
         viewModel.fetchFromDatabase()
 
         btn_add_transaction.setOnClickListener {
@@ -49,6 +56,33 @@ class DashboardFragment : Fragment() {
 
         observeViewModel()
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_dashboard, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.action_logout ->{
+
+                viewModel.logout()
+                val action = DashboardFragmentDirections.actionLogoutUser()
+                view?.let { Navigation.findNavController(it).navigate(action) }
+            }
+            R.id.action_sort_amount ->{
+                sortOrderInc = !sortOrderInc
+                viewModel.sortExpenseByAmount(sortOrderInc)
+            }
+            R.id.action_sort_date ->{
+                sortOrderDate = !sortOrderDate
+                viewModel.sortExpenseByDate(sortOrderDate)
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
 
     private fun observeViewModel() {
         viewModel.expense.observe(viewLifecycleOwner, Observer { expenses ->
@@ -60,6 +94,16 @@ class DashboardFragment : Fragment() {
             }
         })
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 
 }

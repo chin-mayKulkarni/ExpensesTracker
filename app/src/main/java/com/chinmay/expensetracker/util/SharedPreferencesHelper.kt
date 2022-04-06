@@ -8,7 +8,6 @@ import androidx.preference.PreferenceManager
 
 class SharedPreferencesHelper {
     companion object{
-        private const val PREF_TIME = "Pref time"
         private var prefs : SharedPreferences? = null
 
         @Volatile private var instance : SharedPreferencesHelper? =null
@@ -26,15 +25,11 @@ class SharedPreferencesHelper {
         }
     }
 
-    fun saveUpdatedTime(time: Long){
-        prefs?.edit(commit= true) {putLong(PREF_TIME, time)}
-    }
 
-    fun storeLoggedInUser(user: String){
+    fun storeLoggedInUser(user: String?){
         prefs?.edit(commit = true) {putString("user_name", user)}
     }
 
-    fun getLoggedInUser() = prefs?.getString("user_name", " ")
+    fun getLoggedInUser() = prefs?.getString("user_name", null)
 
-    fun getUpdatedTime() = prefs?.getLong(PREF_TIME, 0)
 }

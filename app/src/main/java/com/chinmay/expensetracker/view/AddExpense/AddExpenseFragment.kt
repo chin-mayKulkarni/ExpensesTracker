@@ -1,16 +1,17 @@
 package com.chinmay.expensetracker.view.AddExpense
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.chinmay.expensetracker.R
 import com.chinmay.expensetracker.model.Expense
 import com.chinmay.expensetracker.util.Constants
 import com.chinmay.expensetracker.util.transformIntoDatePicker
+import com.chinmay.expensetracker.view.MainActivity
 import com.chinmay.expensetracker.viewmodel.DashboardViewModel
 import kotlinx.android.synthetic.main.fragment_add_expense.*
 import java.util.*
@@ -32,12 +33,7 @@ class AddExpenseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
-
-        toolbar.title = "Add Expense"
-        toolbar.setNavigationOnClickListener(View.OnClickListener {
-            // back button pressed
-            activity?.onBackPressed()
-        })
+        (activity as MainActivity?)?.setActionBarTitle("Add Expense")
 
         val usersAdapter = ArrayAdapter(
             requireContext(),
@@ -56,12 +52,12 @@ class AddExpenseFragment : Fragment() {
 
         btn_save_expense.setOnClickListener {
             val title = et_title.text.toString()
-            val amount = et_amount.text.toString()
+            val amount = et_amount.text.toString().toLong()
             val date = et_date.text.toString()
             val description = et_desc.text.toString()
             val paid_by = et_paid_by.text.toString()
 
-            listOf(Expense(title, amount, date, description, paid_by))
+            //listOf(Expense(title, amount, date, description, paid_by))
 
             viewModel.storeDataLocally(listOf(Expense(title, amount, paid_by, date, description)))
 

@@ -5,12 +5,21 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
+data class User(
+    val userName: String,
+    val password: String
+){
+    @PrimaryKey(autoGenerate = true)
+    var uuid: Int = 0
+}
+
+@Entity
 data class Expense(
     @ColumnInfo(name = "title")
     val title: String,
 
     @ColumnInfo(name = "amount")
-    val expenseAmount: String,
+    val expenseAmount: Long,
 
     @ColumnInfo(name = "paid_by")
     val paidBy: String,
@@ -20,7 +29,7 @@ data class Expense(
 
     @ColumnInfo(name = "description")
     val description: String?
-){
+) {
     @PrimaryKey(autoGenerate = true)
     var utid: Int = 0
 }
