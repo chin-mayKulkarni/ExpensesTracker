@@ -11,4 +11,8 @@ Android mobile application that helps in tracking expenses that are shared by a 
 3. user3/pass3
 4. user4/pass4
 
+# APK location :
+https://github.com/chin-mayKulkarni/ExpensesTracker/blob/master/app/release/app-release.apk
+
+
 
