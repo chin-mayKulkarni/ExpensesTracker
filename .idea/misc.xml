@@ -18,6 +18,7 @@
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.23802083333333332" />
         <entry key="app/src/main/res/layout/fragment_details.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.23802083333333332" />
+        <entry key="app/src/main/res/layout/fragment_pop_up.xml" value="0.23802083333333332" />
         <entry key="app/src/main/res/layout/item_autocomplete_layout.xml" value="0.23802083333333332" />
         <entry key="app/src/main/res/layout/item_expense_layout.xml" value="0.23802083333333332" />
         <entry key="app/src/main/res/layout/item_transaction_layout.xml" value="0.23802083333333332" />

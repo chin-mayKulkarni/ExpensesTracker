@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 class DashboardFragment : Fragment() {
 
-    private lateinit var viewModel : DashboardViewModel
+    private lateinit var viewModel: DashboardViewModel
     private val dashboardAdapter = DashboardAdapter(arrayListOf())
     private lateinit var prefHelper: SharedPreferencesHelper
     var sortOrderInc = true
@@ -27,14 +27,12 @@ class DashboardFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 showDialog("Notice", "Do you want to logout?")
             }
         })
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +43,8 @@ class DashboardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
+        (activity as MainActivity?)?.setActionBarTitle("Dashboard")
 
         viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
         prefHelper = SharedPreferencesHelper(requireContext())
@@ -53,10 +53,6 @@ class DashboardFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = dashboardAdapter
         }
-
-        setHasOptionsMenu(true)
-        //MainActivity.setActionBarTitle("Dashboard")
-        (activity as MainActivity?)?.setActionBarTitle("Dashboard")
 
         viewModel.fetchFromDatabase()
 
@@ -74,15 +70,15 @@ class DashboardFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.action_logout ->{
+        when (item.itemId) {
+            R.id.action_logout -> {
                 showDialog("Notice", "Do you want to logout?")
             }
-            R.id.action_sort_amount ->{
+            R.id.action_sort_amount -> {
                 sortOrderInc = !sortOrderInc
                 viewModel.sortExpenseByAmount(sortOrderInc)
             }
-            R.id.action_sort_date ->{
+            R.id.action_sort_date -> {
                 sortOrderDate = !sortOrderDate
                 viewModel.sortExpenseByDate(sortOrderDate)
             }
@@ -91,22 +87,20 @@ class DashboardFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun showDialog(title: String, message: String){
+    private fun showDialog(title: String, message: String) {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle(title)
         builder.setMessage(message)
         builder.setIcon(R.drawable.ic_log_out)
 
         //performing positive action
-        builder.setPositiveButton("Yes"){dialogInterface, which ->
+        builder.setPositiveButton("Yes") { dialogInterface, which ->
             viewModel.logout()
             val action = DashboardFragmentDirections.actionLogoutUser()
             view?.let { Navigation.findNavController(it).navigate(action) }
         }
 
-        builder.setNegativeButton("No"){dialogInterface, which ->
-
-        }
+        builder.setNegativeButton("No") { dialogInterface, which -> }
 
         val alertDialog: AlertDialog = builder.create()
         alertDialog.setCancelable(false)
@@ -117,10 +111,7 @@ class DashboardFragment : Fragment() {
     private fun observeViewModel() {
         viewModel.expense.observe(viewLifecycleOwner, Observer { expenses ->
             expenses?.let {
-                /*songsListLocal = songs
-                search_bar.isEnabled = true*/
-
-                if (it.size!=0) tv_no_records.visibility = View.GONE
+                if (it.size != 0) tv_no_records.visibility = View.GONE
                 transaction_list.visibility = View.VISIBLE
                 dashboardAdapter.updateExpensesList(expenses)
             }

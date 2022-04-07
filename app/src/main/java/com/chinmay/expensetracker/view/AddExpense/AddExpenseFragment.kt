@@ -20,13 +20,13 @@ import java.util.*
 
 class AddExpenseFragment : Fragment() {
 
-    lateinit var viewModel : DashboardViewModel
+    lateinit var viewModel: DashboardViewModel
 
     private val mTextWatcher: TextWatcher = object : TextWatcher {
         override fun beforeTextChanged(charSequence: CharSequence, i: Int, i2: Int, i3: Int) {}
         override fun onTextChanged(charSequence: CharSequence, i: Int, i2: Int, i3: Int) {}
         override fun afterTextChanged(editable: Editable) {
-            // check Fields For Empty Values
+            // check Fields For Empty Values everytime some value is entered
             checkFieldsForEmptyValues()
         }
     }
@@ -38,12 +38,10 @@ class AddExpenseFragment : Fragment() {
                 et_paid_by.text.toString() == "")
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_expense, container, false)
     }
 
@@ -53,7 +51,7 @@ class AddExpenseFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
         (activity as MainActivity?)?.setActionBarTitle("Add Expense")
 
-       viewModel.fetchUserNameList()
+        viewModel.fetchUserNameList()
 
         et_title.addTextChangedListener(mTextWatcher)
         et_amount.addTextChangedListener(mTextWatcher)
@@ -70,23 +68,14 @@ class AddExpenseFragment : Fragment() {
 
 
         btn_save_expense.setOnClickListener {
-            val title = et_title.text.toString()
-            val amount = et_amount.text.toString().toLong()
-            val date = et_date.text.toString()
-            val description = et_desc.text.toString()
-            val paid_by = et_paid_by.text.toString()
-
-            viewModel.storeDataLocally(listOf(Expense(title, amount, paid_by, date, description)))
-
+            viewModel.storeDataLocally(getEnteredExpense())
             activity?.onBackPressed()
-
-
         }
         observeViewModel()
     }
 
     private fun observeViewModel() {
-        viewModel.usersList.observe(viewLifecycleOwner, androidx.lifecycle.Observer { users->
+        viewModel.usersList.observe(viewLifecycleOwner, androidx.lifecycle.Observer { users ->
             users?.let {
                 val usersAdapter = ArrayAdapter(
                     requireContext(),
@@ -99,6 +88,16 @@ class AddExpenseFragment : Fragment() {
             }
 
         })
+    }
+
+    private fun getEnteredExpense(): List<Expense> {
+        val title = et_title.text.toString()
+        val amount = et_amount.text.toString().toLong()
+        val date = et_date.text.toString()
+        val description = et_desc.text.toString()
+        val paid_by = et_paid_by.text.toString()
+
+        return listOf(Expense(title, amount, paid_by, date, description))
     }
 
 

@@ -27,6 +27,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+    }
+    buildFeatures {
+        dataBinding = true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
@@ -35,6 +39,7 @@ android {
     kotlinOptions {
         jvmTarget = '11'
     }
+
 }
 
 def lifeCycleExtensionVersion = '1.1.1'
@@ -70,8 +75,6 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
 
     implementation "androidx.preference:preference:$preferencesVersion"
-
-
 
 
     testImplementation 'junit:junit:4.13.2'

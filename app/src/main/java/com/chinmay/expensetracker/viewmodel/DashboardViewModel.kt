@@ -14,7 +14,7 @@ class DashboardViewModel(application: Application) : BaseViewModel(application) 
     val expense = MutableLiveData<List<Expense>>()
     val expenseDetails = MutableLiveData<Expense>()
     val loading = MutableLiveData<Boolean>()
-    var usersList =  MutableLiveData<List<String>>()
+    var usersList = MutableLiveData<List<String>>()
     private lateinit var userMap: Map<String, String>
 
     private var prefHelper = SharedPreferencesHelper(getApplication())
@@ -58,7 +58,7 @@ class DashboardViewModel(application: Application) : BaseViewModel(application) 
     fun fetchUser() {
         launch {
             val userDetails = UsersDataBase(getApplication()).usersDao().getAllUser()
-           userMap= convertListToMap(userDetails)
+            userMap = convertListToMap(userDetails)
             createUsersList(userMap)
             if (!userDetails.equals(null))
                 Log.d("DashBoardViewModel", userDetails.toString())
@@ -89,7 +89,6 @@ class DashboardViewModel(application: Application) : BaseViewModel(application) 
 
     fun storeDataLocally(list: List<Expense>) {
         launch {
-            //ExpenseDataBase(getApplication()).expenseDao().deleteAllExpenses()
             val result =
                 ExpenseDataBase(getApplication()).expenseDao().insertAll(*list.toTypedArray())
             var i = 0
@@ -112,7 +111,6 @@ class DashboardViewModel(application: Application) : BaseViewModel(application) 
     }
 
     fun logout() {
-        //TODO: Show do u want to exit pop-up
         prefHelper.storeLoggedInUser(null)
     }
 
@@ -123,13 +121,11 @@ class DashboardViewModel(application: Application) : BaseViewModel(application) 
     fun fetchUserNameList() {
         launch {
             val userDetails = UsersDataBase(getApplication()).usersDao().getAllUser()
-            userMap= convertListToMap(userDetails)
+            userMap = convertListToMap(userDetails)
             createUsersList(userMap)
             if (!userDetails.equals(null))
                 Log.d("DashBoardViewModel", userDetails.toString())
         }
-        //return usersList
     }
-
 
 }

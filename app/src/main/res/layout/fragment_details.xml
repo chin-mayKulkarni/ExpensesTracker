@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_16"
             android:layout_marginTop="@dimen/dimen_32"
-            android:text="Title"
+            android:text="@string/title"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,9 +31,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_16"
             android:layout_marginTop="@dimen/dimen_8"
-            android:text="Title"
+            android:text="@string/title"
             android:textColor="@color/black"
-            android:textSize="@dimen/dimen_16"
+            android:textSize="@dimen/dimen_text_16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/caption_title"/>
 
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_16"
             android:layout_marginTop="@dimen/dimen_24"
-            android:text="Amount"
+            android:text="@string/amount"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title" />
@@ -57,7 +57,7 @@
             android:layout_marginTop="@dimen/dimen_8"
             android:text="35"
             android:textColor="@color/black"
-            android:textSize="@dimen/dimen_16"
+            android:textSize="@dimen/dimen_text_16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/caption_amount"/>
 
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_16"
             android:layout_marginTop="@dimen/dimen_24"
-            android:text="Date"
+            android:text="@string/date"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/amount" />
@@ -79,9 +79,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_16"
             android:layout_marginTop="@dimen/dimen_8"
-            android:text="01/04/2022"
+            android:text="@string/_01_04_2022"
             android:textColor="@color/black"
-            android:textSize="@dimen/dimen_16"
+            android:textSize="@dimen/dimen_text_16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/caption_date"/>
 
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_16"
             android:layout_marginTop="@dimen/dimen_24"
-            android:text="Description"
+            android:text="@string/description"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/expense_date" />
@@ -103,9 +103,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_16"
             android:layout_marginTop="@dimen/dimen_8"
-            android:text="Some description is displayed here"
+            android:text="@string/some_description_is_displayed_here"
             android:textColor="@color/black"
-            android:textSize="@dimen/dimen_16"
+            android:textSize="@dimen/dimen_text_16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/caption_desc"/>
 
@@ -116,7 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_16"
             android:layout_marginTop="@dimen/dimen_24"
-            android:text="Paid By"
+            android:text="@string/paid_by"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/expense_desc" />
@@ -127,9 +127,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_16"
             android:layout_marginTop="@dimen/dimen_8"
-            android:text="User 1"
+            android:text="@string/user_1"
             android:textColor="@color/black"
-            android:textSize="@dimen/dimen_16"
+            android:textSize="@dimen/dimen_text_16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/caption_paid_by"/>
 
@@ -139,7 +139,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_16"
             android:layout_marginTop="@dimen/dimen_24"
-            android:text="Split equally with"
+            android:text="@string/split_equally_with"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/expense_paid_by" />
@@ -150,9 +150,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_16"
             android:layout_marginTop="@dimen/dimen_8"
-            android:text="User 2, USer 3, User 4"
+            android:text="@string/user_2_user_3_user_4"
             android:textColor="@color/black"
-            android:textSize="@dimen/dimen_16"
+            android:textSize="@dimen/dimen_text_16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/caption_split_with"/>
 

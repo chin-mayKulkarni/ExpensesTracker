@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dimen_16"
-            android:hint="Title"
+            android:hint="@string/title"
             app:boxBackgroundColor="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dimen_16"
-            android:hint="Amount"
+            android:hint="@string/amount"
             app:boxBackgroundColor="@color/white"
             app:prefixText="@string/rupees">
 
@@ -70,7 +70,7 @@
             android:layout_margin="@dimen/dimen_16"
             android:clickable="true"
             android:focusable="true"
-            android:hint="Date"
+            android:hint="@string/date"
             app:boxBackgroundColor="@color/white"
             app:endIconDrawable="@drawable/ic_baseline_calendar"
             app:endIconMode="custom">
@@ -88,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dimen_16"
-            android:hint="Description"
+            android:hint="@string/description"
             app:boxBackgroundColor="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -107,7 +107,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dimen_16"
-            android:hint="Paid By"
+            android:hint="@string/paid_by"
             app:boxBackgroundColor="@color/white">
 
             <AutoCompleteTextView
@@ -126,13 +126,10 @@
         android:id="@+id/btn_save_expense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_8"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_margin="@dimen/dimen_16"
         android:enabled="false"
-        android:text="save expense"
+        android:text="@string/save_expense"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
