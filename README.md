@@ -14,5 +14,5 @@ Android mobile application that helps in tracking expenses that are shared by a 
 # APK location :
 https://github.com/chin-mayKulkarni/ExpensesTracker/blob/master/app/release/app-release.apk
 
-
-
+# Note : 
+Author does not have any copy rights on the images and icons used. 
