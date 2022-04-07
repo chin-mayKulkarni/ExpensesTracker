@@ -3,7 +3,6 @@ package com.chinmay.expensetracker.view.Details
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
@@ -11,9 +10,7 @@ import com.chinmay.expensetracker.R
 import com.chinmay.expensetracker.util.SharedPreferencesHelper
 import com.chinmay.expensetracker.view.MainActivity
 import com.chinmay.expensetracker.viewmodel.DashboardViewModel
-import kotlinx.android.synthetic.main.fragment_add_expense.*
 import kotlinx.android.synthetic.main.fragment_details.*
-import java.util.*
 
 class DetailsFragment : Fragment() {
 
@@ -38,8 +35,6 @@ class DetailsFragment : Fragment() {
         setHasOptionsMenu(true)
         (activity as MainActivity?)?.setActionBarTitle("Details")
 
-
-
         viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
         viewModel.fetchUserNameList()
         val utid = args.utid
@@ -52,7 +47,6 @@ class DetailsFragment : Fragment() {
     private fun observeViewModel() {
         viewModel.expenseDetails.observe(viewLifecycleOwner, androidx.lifecycle.Observer { expense ->
             expense?.let {
-
                 title.text = it.title
                 amount.text = "₹" + it.expenseAmount.toString()
                 expense_date.text = it.expenseDate
@@ -67,7 +61,6 @@ class DetailsFragment : Fragment() {
         viewModel.usersList.observe(viewLifecycleOwner, androidx.lifecycle.Observer { users->
             users?.let {
                 Log.d("AddExpensesFragment", it.toString())
-               // et_paid_by.setAdapter(usersAdapter)
                 allUsers = it.toString().replace("[", "")
                 allUsers = allUsers.replace("]", "")
                 allUsers = allUsers.replace(",", "")
@@ -78,8 +71,6 @@ class DetailsFragment : Fragment() {
 
     private fun getUsers(paidBy: String): CharSequence? {
         return  allUsers.replace(paidBy, "")
-
-
     }
 
 }

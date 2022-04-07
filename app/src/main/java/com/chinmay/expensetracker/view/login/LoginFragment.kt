@@ -1,27 +1,33 @@
 package com.chinmay.expensetracker.view.login
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.chinmay.expensetracker.R
+import com.chinmay.expensetracker.databinding.FragmentLoginBinding
 import com.chinmay.expensetracker.model.User
-import com.chinmay.expensetracker.view.Dashboard.DashboardFragmentDirections
 import com.chinmay.expensetracker.view.MainActivity
 import com.chinmay.expensetracker.viewmodel.DashboardViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
 
+
 class LoginFragment : Fragment() {
 
-    private lateinit var viewModel : DashboardViewModel
+    private lateinit var binding: FragmentLoginBinding
+
+    private lateinit var viewModel: DashboardViewModel
     lateinit var usersList: List<User>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,8 +45,9 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
+        return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,19 +64,23 @@ class LoginFragment : Fragment() {
         val action = LoginFragmentDirections.actionDashboardFragment()
         viewModel.initializeUsers(usersList)
         viewModel.fetchUser()
-
-       if ( viewModel.isLoggedIn()){
-           Navigation.findNavController(view).navigate(action)
-       }
         (activity as MainActivity?)?.setActionBarTitle("Login")
 
-        btn_login.setOnClickListener {
+        if (viewModel.isLoggedIn()) {
+            Navigation.findNavController(view).navigate(action)
+        }
+
+
+        binding.btnLogin.setOnClickListener {
             val valid = viewModel.validateUser(username.text.toString(), password.text.toString())
             if (valid) {
                 Navigation.findNavController(it).navigate(action)
-            } else{
+            } else {
                 username.text?.clear()
                 password.text?.clear()
+                username.requestFocus()
+                val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showSoftInput(username, InputMethodManager.SHOW_IMPLICIT)
             }
         }
         observeViewModel()
@@ -80,11 +91,8 @@ class LoginFragment : Fragment() {
         viewModel.validUser.observe(viewLifecycleOwner, Observer { isValid ->
             isValid?.let { valid ->
                 errorText.visibility = if (valid) View.GONE else View.VISIBLE
-
             }
         })
-
-
     }
 
     override fun onResume() {
@@ -97,22 +105,21 @@ class LoginFragment : Fragment() {
         (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 
-    private fun showDialog(title: String, message: String){
+    private fun showDialog(title: String, message: String) {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle(title)
         builder.setMessage(message)
 
-        builder.setPositiveButton("Yes"){dialogInterface, which ->
+        builder.setPositiveButton("Yes") { dialogInterface, which ->
             activity?.finish()
         }
-        builder.setNegativeButton("No"){dialogInterface, which ->
+        builder.setNegativeButton("No") { dialogInterface, which ->
         }
 
         val alertDialog: AlertDialog = builder.create()
         alertDialog.setCancelable(false)
         alertDialog.show()
     }
-
 
 
 }

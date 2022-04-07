@@ -28,6 +28,20 @@ class DashboardAdapter(val expenseList: ArrayList<Expense>) :
     }
 
     override fun onBindViewHolder(holder: ExpenseViewHolder, position: Int) {
+        //set values of recycler view list item
+        setExpenseList(holder, position)
+
+        holder.view.setOnClickListener {
+            Log.d("DashboardAdapter", expenseList[position].utid.toString())
+            val action =
+                DashboardFragmentDirections.actionDetailsFragment(expenseList[position].utid)
+            Navigation.findNavController(it)
+                .navigate(action)
+        }
+
+    }
+
+    private fun setExpenseList(holder: ExpenseViewHolder, position: Int) {
         val prefHelper = SharedPreferencesHelper(holder.view.context)
         val loggedInUser = prefHelper.getLoggedInUser()
         holder.view.expenseTitle.text = expenseList[position].title
@@ -38,16 +52,6 @@ class DashboardAdapter(val expenseList: ArrayList<Expense>) :
         }
         holder.view.expenseAmount.text = expenseList[position].expenseAmount.toString()
         holder.view.expenseDate.text = expenseList[position].expenseDate
-
-
-        holder.view.setOnClickListener {
-            Log.d("DashboardAdapter", expenseList[position].utid.toString())
-            val action =
-                DashboardFragmentDirections.actionDetailsFragment(expenseList[position].utid)
-            Navigation.findNavController(it)
-                .navigate(action)
-        }
-
     }
 
 
